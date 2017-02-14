@@ -72,8 +72,6 @@
     <Compile Include="Assets\UrbanUnderground\Demo\DemoScripts\BakeAllProbes.cs" />
     <Compile Include="Assets\UrbanUnderground\Demo\DemoScripts\RemoveDemoMessage.cs" />
     <Compile Include="Assets\UrbanUnderground\Demo\DemoScripts\Respawner.cs" />
-    <Compile Include="Assets\UrbanUnderground\Demo\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
-    <Compile Include="Assets\UrbanUnderground\Demo\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
     <Compile Include="Assets\UrbanUnderground\Source\Scripts\CameraShake.cs" />
     <Compile Include="Assets\UrbanUnderground\Source\Scripts\Gate.cs" />
     <Compile Include="Assets\UrbanUnderground\Source\Scripts\LeftDoor.cs" />
