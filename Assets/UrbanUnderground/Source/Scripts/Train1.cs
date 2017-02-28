@@ -16,7 +16,7 @@ public class Train1 : MonoBehaviour {
 	public bool trainStopped = false;
 
 	private Light[] lights;
-	private Transform startPos;
+	public Transform[] station_list;
 	private bool playerInside = false;
 	AudioSource current;
 
@@ -25,11 +25,12 @@ public class Train1 : MonoBehaviour {
 	TrainDoors td;
 
 	void Start () {
+        station_list = new Transform[3];
 		anim = GetComponent<Animator>();
 		td = GetComponent<TrainDoors>();
 		current = GetComponent<AudioSource>();
 		lights = GetComponentsInChildren<Light> ();
-		startPos = this.transform;
+		station_list[0] = this.transform;
 		foreach (Light light in lights) {
 			light.enabled = false;
 		}
@@ -38,18 +39,6 @@ public class Train1 : MonoBehaviour {
 		}
 	}
 
-	//TODO uncomment this section to toggle train manually - F key to call it, G key to make it depart the station
-	/*
-	void Update () {
-		if (Input.GetKeyDown(KeyCode.F)) {
-			StartCoroutine(LaunchTrain(20f));
-		}
-		if (Input.GetKeyDown(KeyCode.G)) {
-			mainPASystem.volume =0.1f;
-			StartCoroutine(leaveStation());
-			StartCoroutine(Depart());
-		}
-	}*/
 
 	public void TrainDepart() {
 		if (playerInside) 		mainPASystem.volume = 0.2f;
@@ -72,6 +61,7 @@ public class Train1 : MonoBehaviour {
 		foreach (Renderer r in GetComponentsInChildren<Renderer>()) {
 			r.enabled = true;
 		}
+        
 		anim.SetTrigger("LaunchTrain");
 	}
 
@@ -120,7 +110,7 @@ public class Train1 : MonoBehaviour {
 
 	IEnumerator Depart() {
 		yield return new WaitForSeconds(4f);
-		anim.SetTrigger("depart");
+		anim.SetTrigger("LaunchTrain");
 		mainPASystem.clip = ambient;
 		mainPASystem.Play ();
 		if (playerInside) {
@@ -149,19 +139,11 @@ public class Train1 : MonoBehaviour {
 		foreach (Renderer r in GetComponentsInChildren<Renderer>()) {
 			r.enabled = false;
 		}
-		this.transform.position = startPos.position;
-		anim.SetTrigger ("reset");
+	//	this.transform.position = startPos.position;
+	//	anim.SetTrigger ("reset");
 		mainPASystem.volume = 1;
 	}
 
-	void OnGUI(){
-		if (playerInside) {
-			GUIStyle style = new GUIStyle ();
-			style.fontSize = 22;
-			style.normal.textColor = Color.white;
-			Rect rect = new Rect (Screen.width - (Screen.width - 50), Screen.height - 50f, 300, 45);
-			//GUI.Label (rect, "If you remain inside the train, the level will be reloaded", style);
-		}
-	}
+	
 		
 }
