@@ -61,7 +61,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
-            RotateView();
+            gameObject.transform.Rotate(new Vector3(0, Input.GetAxis("4th"), 0));
+            if(Input.GetKeyDown(KeyCode.Joystick1Button6))
+            {
+                Application.Quit();
+                UnityEditor.EditorApplication.isPlaying = false; 
+            }
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
             {

@@ -77,11 +77,13 @@ public class Train1 : MonoBehaviour {
 
 	void OnTriggerEnter(Collider o) {
 		td.doorsMoving = false;
-		playerInside = true;
-		o.transform.SetParent(this.transform);
-		mainPASystem.volume = 0.4f;
-		current.volume = 1;
-		current.spatialBlend = 0;
+        if (o.tag == "Player") {
+            playerInside = true;
+            o.transform.SetParent(this.transform);
+            mainPASystem.volume = 0.4f;
+            current.volume = 1;
+            current.spatialBlend = 0;
+        }
 	}
 
 	void OnTriggerExit(Collider o) {
@@ -129,16 +131,15 @@ public class Train1 : MonoBehaviour {
 				cs.enabled = false;
 			}
 			FindObjectOfType<CameraShake> ().enabled = true;
-			StartCoroutine (RestartLevel ());
+			
 		} else {
 			StartCoroutine (DisableTrain ());
 		}
 	}
+    void GoToNextStation()
+    {
 
-	IEnumerator RestartLevel() {
-		yield return new WaitForSeconds (20f);
-		SceneManager.LoadScene ("demo");
-	}
+    }
 
 	IEnumerator DisableTrain(){
 		yield return new WaitForSeconds (30f);
@@ -159,7 +160,7 @@ public class Train1 : MonoBehaviour {
 			style.fontSize = 22;
 			style.normal.textColor = Color.white;
 			Rect rect = new Rect (Screen.width - (Screen.width - 50), Screen.height - 50f, 300, 45);
-			GUI.Label (rect, "If you remain inside the train, the level will be reloaded", style);
+			//GUI.Label (rect, "If you remain inside the train, the level will be reloaded", style);
 		}
 	}
 		

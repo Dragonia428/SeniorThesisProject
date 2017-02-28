@@ -19,7 +19,7 @@ public class VendingMachine : MonoBehaviour {
 	void OnTriggerStay(Collider other) {
 		if (other.CompareTag ("Player")) {
 			inZone = true;
-			if (Input.GetKeyDown (KeyCode.E)) {
+			if (Input.GetKeyDown (KeyCode.E) || Input.GetKeyDown(KeyCode.Joystick1Button0)) {
 				AudioSource.PlayClipAtPoint (vendingMachine, this.transform.position);
 				GameObject go = (GameObject)Instantiate (sodaPrefab);
 				go.transform.SetParent (this.transform);
@@ -41,7 +41,7 @@ public class VendingMachine : MonoBehaviour {
 			style.fontSize = 35;
 			style.normal.textColor = Color.white;
 			Rect rect = new Rect (Screen.width / 2 - 50, Screen.height / 2 - 22.5f, 200, 45);
-			GUI.Label (rect, "Press E for a pop", style);
+			GUI.Label (rect, "Press A for a pop", style);
 		}
 
 	}

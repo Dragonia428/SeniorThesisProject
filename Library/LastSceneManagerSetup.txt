@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/currentscene.unity
+- path: Assets/UrbanUnderground/Demo/Demo.unity
   isLoaded: 1
   isActive: 1
