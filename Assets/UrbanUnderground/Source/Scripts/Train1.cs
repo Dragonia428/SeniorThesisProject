@@ -61,8 +61,9 @@ public class Train1 : MonoBehaviour {
 		foreach (Renderer r in GetComponentsInChildren<Renderer>()) {
 			r.enabled = true;
 		}
-        
-		anim.SetTrigger("LaunchTrain");
+
+        anim.SetTrigger("Train_appr");
+
 	}
 
 	void OnTriggerEnter(Collider o) {
@@ -74,6 +75,7 @@ public class Train1 : MonoBehaviour {
             current.volume = 1;
             current.spatialBlend = 0;
         }
+       
 	}
 
 	void OnTriggerExit(Collider o) {
@@ -110,7 +112,7 @@ public class Train1 : MonoBehaviour {
 
 	IEnumerator Depart() {
 		yield return new WaitForSeconds(4f);
-		anim.SetTrigger("LaunchTrain");
+		anim.SetTrigger("depart");
 		mainPASystem.clip = ambient;
 		mainPASystem.Play ();
 		if (playerInside) {
@@ -122,9 +124,7 @@ public class Train1 : MonoBehaviour {
 			}
 			FindObjectOfType<CameraShake> ().enabled = true;
 			
-		} else {
-			StartCoroutine (DisableTrain ());
-		}
+		} 
 	}
     void GoToNextStation()
     {

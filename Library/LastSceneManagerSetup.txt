@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/UrbanUnderground/Demo/Demo.unity
+- path: Assets/Scenes/traintest.unity
   isLoaded: 1
   isActive: 1

@@ -28,7 +28,7 @@ public class TrainDoors : MonoBehaviour {
 		}
 	}
 
-	private void OpenDoors() {
+	public void OpenDoors() {
 		foreach ( RightDoor r in rightDoors) {
 			r.SetDoorVector(0.8f);
 		}
