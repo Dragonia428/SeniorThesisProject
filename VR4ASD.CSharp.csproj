@@ -70,8 +70,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\C#_Code\CPU_Behavior.cs" />
+    <Compile Include="Assets\C#_Code\MyTrainMotion.cs" />
     <Compile Include="Assets\C#_Code\WaypointNavigation.cs" />
-    <Compile Include="Assets\MyTrainMotion.cs" />
     <Compile Include="Assets\OVR\Scripts\OVRBoundary.cs" />
     <Compile Include="Assets\OVR\Scripts\OVRCameraRig.cs" />
     <Compile Include="Assets\OVR\Scripts\OVRCommon.cs" />
@@ -103,6 +103,7 @@
     <Compile Include="Assets\OVR\Scripts\Util\OVRSceneSampleController.cs" />
     <Compile Include="Assets\OVR\Scripts\Util\OVRScreenFade.cs" />
     <Compile Include="Assets\OVR\Scripts\Util\OVRWaitCursor.cs" />
+    <Compile Include="Assets\StationWayPoint.cs" />
     <Compile Include="Assets\UrbanUnderground\Demo\DemoScripts\BakeAllProbes.cs" />
     <Compile Include="Assets\UrbanUnderground\Demo\DemoScripts\RemoveDemoMessage.cs" />
     <Compile Include="Assets\UrbanUnderground\Demo\DemoScripts\Respawner.cs" />

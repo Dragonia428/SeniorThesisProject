@@ -18,6 +18,7 @@ public class TrainDoors : MonoBehaviour {
 	}
 
 	void Update() {
+        /*
 		if (doorsMoving) {
 			foreach ( RightDoor r in rightDoors) {
 				r.transform.position = Vector3.Slerp(r.transform.position, r.targetValue, Time.deltaTime);
@@ -26,6 +27,7 @@ public class TrainDoors : MonoBehaviour {
 				l.transform.position = Vector3.Slerp(l.transform.position, l.targetValue, Time.deltaTime);
 			}
 		}
+        */
 	}
 
 	public void OpenDoors() {
@@ -33,11 +35,11 @@ public class TrainDoors : MonoBehaviour {
 			r.SetDoorVector(0.8f);
 		}
 		foreach ( LeftDoor l in leftDoors) {
-			l.SetDoorVector(0.8f);
+			l.SetDoorVector(-0.8f);
 		}
 		doorsMoving = true;
 		StartCoroutine (SnapDoorsOpen ());
-		FindObjectOfType<Train1> ().trainStopped = true;
+		//FindObjectOfType<Train1> ().trainStopped = true;
 	}
 
 	public void CloseDoors() {
@@ -52,16 +54,17 @@ public class TrainDoors : MonoBehaviour {
 
 	public void SecureDoors() {
 		foreach ( RightDoor r in rightDoors) {
-			r.transform.position = r.targetValue;
+            r.transform.position = new Vector3(r.transform.position.x, r.transform.position.z + 0.8f);
 		}
 
 		foreach ( LeftDoor l in leftDoors) {
-			l.transform.position = l.targetValue;
-		}
+
+            l.transform.position = new Vector3(l.transform.position.x, l.transform.position.z - 0.8f);
+        }
 	}
 
 	IEnumerator SnapDoorsOpen() {
-		yield return new WaitForSeconds (3f);
+		yield return new WaitForSeconds (1f);
 		SecureDoors ();
 	}
 
