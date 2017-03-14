@@ -29,7 +29,7 @@ public class CPU_Behavior : MonoBehaviour {
             WaypointNavigation wp = g.GetComponent<WaypointNavigation>();
             if (!wp.occupied) return false;
         }
-        return false; 
+        return true; 
     }
 	// Update is called once per frame
 	void Update () {
