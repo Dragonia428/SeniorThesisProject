@@ -18,29 +18,43 @@ public class TrainDoors : MonoBehaviour {
 	}
 
 	void Update() {
-        /*
-		if (doorsMoving) {
-			foreach ( RightDoor r in rightDoors) {
-				r.transform.position = Vector3.Slerp(r.transform.position, r.targetValue, Time.deltaTime);
-			}
-			foreach ( LeftDoor l in leftDoors) {
-				l.transform.position = Vector3.Slerp(l.transform.position, l.targetValue, Time.deltaTime);
-			}
-		}
-        */
+
+        if (doorsMoving)
+        {
+            foreach (RightDoor r in rightDoors)
+            {
+
+                r.transform.position = Vector3.Slerp(r.transform.position, r.targetValue, Time.deltaTime);
+            }
+            foreach (LeftDoor l in leftDoors)
+            {
+                l.transform.position = Vector3.Slerp(l.transform.position, l.targetValue, Time.deltaTime);
+            }
+            //doorsMoving = false;
+        }
+        //
+		//}
+
 	}
+    private void MoveDoors()
+    {
+       
+    }
 
 	public void OpenDoors() {
+        Debug.Log(doorsMoving);
 		foreach ( RightDoor r in rightDoors) {
 			r.SetDoorVector(0.8f);
 		}
 		foreach ( LeftDoor l in leftDoors) {
 			l.SetDoorVector(-0.8f);
 		}
-		doorsMoving = true;
-		StartCoroutine (SnapDoorsOpen ());
-		//FindObjectOfType<Train1> ().trainStopped = true;
-	}
+        doorsMoving = true;
+
+        gameObject.GetComponent<MyTrainMotion>().doorsready = true;
+        //	StartCoroutine (SnapDoorsOpen ());
+
+    }
 
 	public void CloseDoors() {
 		foreach ( RightDoor r in rightDoors) {
@@ -52,15 +66,31 @@ public class TrainDoors : MonoBehaviour {
 		doorsMoving = true;
 	}
 
-	public void SecureDoors() {
-		foreach ( RightDoor r in rightDoors) {
-            r.transform.position = new Vector3(r.transform.position.x, r.transform.position.z + 0.8f);
-		}
+	public void SecureDoors()
+    {
+        doorsMoving = true; 
+        if (MyTrainMotion.trainStopped)
+        {
+            
+            foreach (RightDoor r in rightDoors)
+            {
+                r.transform.position = new Vector3(r.transform.position.x, r.transform.position.y, r.transform.position.z + 0.8f);
+                
+            }
 
-		foreach ( LeftDoor l in leftDoors) {
+            foreach (LeftDoor l in leftDoors)
+            {
 
-            l.transform.position = new Vector3(l.transform.position.x, l.transform.position.z - 0.8f);
+                l.transform.position = new Vector3(l.transform.position.x, l.transform.position.y, l.transform.position.z - 0.8f);
+                
+            }
+            
+            
+            
         }
+        
+        
+
 	}
 
 	IEnumerator SnapDoorsOpen() {

@@ -7,8 +7,9 @@ public class MyTrainMotion : MonoBehaviour {
     public Transform[] target;
     public AudioSource[] station_messages;
     public float train_speed;
-    [HideInInspector]
     static public bool trainStopped = false;
+    [HideInInspector]
+    public bool doorsready = false; 
     [HideInInspector]
     int station_tracker = 0;
     static public bool PlayerInside = false; 
@@ -72,10 +73,14 @@ public class MyTrainMotion : MonoBehaviour {
 	void Update () {
         Debug.DrawLine(gameObject.transform.position, target[station_tracker].position);
         Debug.Log(trainStopped);
-        Depart();
-        StartCoroutine(CheckIfStopped());
-        if (trainStopped)
-            StartCoroutine(WaitInStation(10f));
+        //  Depart();
+        if(!doorsready)
+        {
+            tr.OpenDoors();
+        }
+     //   StartCoroutine(CheckIfStopped());
+        //if (trainStopped)
+      //      StartCoroutine(WaitInStation(10f));
         
     }
     void OnTriggerEnter(Collider other)

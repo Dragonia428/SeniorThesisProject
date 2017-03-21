@@ -1,44 +1,54 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityStandardAssets.Characters.ThirdPerson;
 [RequireComponent(typeof(NavMeshAgent))]
-public class CPU_Behavior : MonoBehaviour { 
-    
+public class CPU_Behavior : MonoBehaviour {
+    private int currentindex = 0; 
     NavMeshAgent navigation_path;
+    HashID hash; 
+    Animator anim;
+    public List<GameObject> waypoints;
+ 
 
 
-    public GameObject[] waypoints;
-
-  //  public float Forward_Distance;
-   // AnimationState anims;
 
     public Transform target; 
     void Awake()
     {
-         navigation_path = gameObject.GetComponent<NavMeshAgent>();
+        navigation_path = gameObject.GetComponent<NavMeshAgent>();
 
+        anim = gameObject.GetComponent<Animator>();
+
+        //Note: better to initialize: VERY slow!
+        if(waypoints.Count == 0)
+            waypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("WayPoint"));
+        
          
     }
 	// Use this for initialization
 	void Start () {
-	
+	    
 	}
-	bool CheckIfAllWayPointsAreOccupied()
+	private bool AreAllWayPointsAreOccupied()
     {
-        foreach(GameObject g in waypoints)
-        {
-            WaypointNavigation wp = g.GetComponent<WaypointNavigation>();
-            if (!wp.occupied) return false;
-        }
-        return true; 
+        foreach (GameObject go in waypoints)
+            if (!go.gameObject.GetComponent<WaypointNavigation>().occupied) return false;
+        return true;
+    }
+    private bool IsAtDestination()
+    {
+        return navigation_path.remainingDistance != 0;
     }
 	// Update is called once per frame
 	void Update () {
-        if (waypoints.Length == 0)
-            navigation_path.SetDestination(gameObject.transform.position);
-        
-        navigation_path.SetDestination(target.position);
+        if(!AreAllWayPointsAreOccupied())
+             navigation_path.SetDestination(waypoints[currentindex].transform.position);
+ 
 
 
     }
+
 
 }
