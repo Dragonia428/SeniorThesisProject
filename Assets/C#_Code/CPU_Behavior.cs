@@ -48,7 +48,7 @@ public class CPU_Behavior : MonoBehaviour {
     {
         navigation_path.Stop();
         anim.SetFloat("Speed", 0f, 1.5f, Time.deltaTime * 2);
-        anim.SetFloat("AngularSpeed", 0, 1.5f, Time.deltaTime * 2);
+        anim.SetFloat("AngularSpeed", 0, 1f, Time.deltaTime);
         //anim.SetFloat("AngularSpeed", navigation_path.angularSpeed);
     }
     public void Move_CPU(float speed)

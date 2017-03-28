@@ -4,7 +4,7 @@ using System.Collections;
 public class MyTrainMotion : MonoBehaviour {
     const int NUMBER_OF_STATIONS = 10;
     TrainDoors tr;
-    public Transform[] target;
+    public GameObject[] targets;
     public AudioSource[] station_messages;
     public float train_speed = 1.5f;
     static public bool trainStopped = false;
@@ -12,15 +12,23 @@ public class MyTrainMotion : MonoBehaviour {
     public bool doorsready = false; 
     public int station_tracker = 0;
     static public bool PlayerInside = false;
-   
+   void Awake()
+    {
+       // target = new GameObject[NUMBER_OF_STATIONS];
+        station_tracker = 0;
+        if(targets==null || targets.Length == 0)
+             targets = GameObject.FindGameObjectsWithTag("Station");
+    }
 	// Use this for initialization
 	void Start () {
         tr = gameObject.GetComponent<TrainDoors>();
-        station_tracker = 0;
+     
 	}
 	int CalculateRemainingDistance(Transform the_other_object)
     {
-        return (int)(the_other_object.position.z - gameObject.transform.position.z);
+            return (int)(the_other_object.position.z - gameObject.transform.position.z);
+        
+        
     }
     bool AtStation(Transform the_other_object)
     {
@@ -45,18 +53,19 @@ public class MyTrainMotion : MonoBehaviour {
     }
     void Depart()
     {
-        if (!AtStation(target[station_tracker]))
+        if (!AtStation(targets[station_tracker].transform))
             MoveTrain(train_speed);
-        if (DetectStation(target[station_tracker]))
+        if (DetectStation(targets[station_tracker].transform))
             Brake();
     }
     void MoveTrain(float train_speed)
     {
-        gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, train_speed), ForceMode.Force);
+        gameObject.GetComponent<Rigidbody>().velocity += new Vector3(0, 0, train_speed);
+
     }
     void Brake()
     {
-        gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, -train_speed), ForceMode.Force);
+       // gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, -train_speed), ForceMode.Force);
     }
     void GoToNextStation()
     {
@@ -73,7 +82,7 @@ public class MyTrainMotion : MonoBehaviour {
 	void Update () {
         //  Debug.DrawLine(gameObject.transform.position, target[station_tracker].position);
         //   Debug.Log(DetectStation(target[station_tracker]));
-        Depart();
+      Depart();
          
         
      //  StartCoroutine(CheckIfStopped());
@@ -88,7 +97,8 @@ public class MyTrainMotion : MonoBehaviour {
     }
     void FixedUpdate()
     {
-        //Depart();
+        Debug.Log(AtStation(targets[station_tracker].transform));
+    //    Depart();
     }
     
     
