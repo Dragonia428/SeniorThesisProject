@@ -2,21 +2,30 @@
 using System.Collections;
 
 public class WaypointNavigation : MonoBehaviour {
-    public bool occupied = false; 
+    public bool occupied;
+    HashID hash;
 	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void Awake()
+    {
+      //  occupied = false; 
+    }
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player" || other.tag == "NPC" )
+        if (other.tag == "NPC")
         {
-            occupied = true; 
+            occupied = true;
+            
         }
+    }
+    void OnTriggerStay(Collider other)
+    {
+        if(other.tag == "NPC")
+        {
+         //  other.GetComponent<Animator>().SetFloat("Speed", 0f, 0f, Time.deltaTime);
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        occupied = false; 
     }
 }
