@@ -73,7 +73,9 @@
     <Compile Include="Assets\C#_Code\CPU_Behavior.cs" />
     <Compile Include="Assets\C#_Code\HashID.cs" />
     <Compile Include="Assets\C#_Code\MyTrainMotion.cs" />
+    <Compile Include="Assets\C#_Code\PriorityQueue.cs" />
     <Compile Include="Assets\C#_Code\WaypointNavigation.cs" />
+    <Compile Include="Assets\C#_Code\Waypoint_Queue.cs" />
     <Compile Include="Assets\StationWayPoint.cs" />
     <Compile Include="Assets\UrbanUnderground\Demo\DemoScripts\BakeAllProbes.cs" />
     <Compile Include="Assets\UrbanUnderground\Demo\DemoScripts\RemoveDemoMessage.cs" />

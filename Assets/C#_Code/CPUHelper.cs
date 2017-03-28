@@ -16,7 +16,7 @@ public class CPUHelper {
     public void Setup(float speed, float angle)
     {
         float angularSpeed = angle / angularResponseTime;
-        anim.SetFloat(hash.angularSpeedFloat, speed, dampSpeedTime, Time.deltaTime);
-        anim.SetFloat(hash.speedFloat, speed, angulardampSpeed, Time.deltaTime);
+       // anim.SetFloat(hash.angularSpeedFloat, speed, dampSpeedTime, Time.deltaTime);
+       // anim.SetFloat(hash.speedFloat, speed, angulardampSpeed, Time.deltaTime);
     }
 }

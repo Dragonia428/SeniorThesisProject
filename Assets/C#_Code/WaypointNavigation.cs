@@ -7,14 +7,25 @@ public class WaypointNavigation : MonoBehaviour {
 	// Use this for initialization
     void Awake()
     {
-        occupied = false; 
+      //  occupied = false; 
     }
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "NPC")
         {
             occupied = true;
-           // other.gameObject.GetComponent<Animator>().CrossFade("Idle", 0);
+            
         }
+    }
+    void OnTriggerStay(Collider other)
+    {
+        if(other.tag == "NPC")
+        {
+         //  other.GetComponent<Animator>().SetFloat("Speed", 0f, 0f, Time.deltaTime);
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        occupied = false; 
     }
 }

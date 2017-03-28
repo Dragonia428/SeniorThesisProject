@@ -6,16 +6,17 @@ public class MyTrainMotion : MonoBehaviour {
     TrainDoors tr;
     public Transform[] target;
     public AudioSource[] station_messages;
-    public float train_speed;
+    public float train_speed = 1.5f;
     static public bool trainStopped = false;
     [HideInInspector]
     public bool doorsready = false; 
-    [HideInInspector]
-    int station_tracker = 0;
-    static public bool PlayerInside = false; 
+    public int station_tracker = 0;
+    static public bool PlayerInside = false;
+   
 	// Use this for initialization
 	void Start () {
         tr = gameObject.GetComponent<TrainDoors>();
+        station_tracker = 0;
 	}
 	int CalculateRemainingDistance(Transform the_other_object)
     {
@@ -38,25 +39,24 @@ public class MyTrainMotion : MonoBehaviour {
         trainStopped = currpos == nextpos ? true : false;
 
     }
-    bool DetectStation(Transform station, float how_far_away)
+    bool DetectStation(Transform station)
     {
-        Ray r = new Ray(gameObject.transform.position, Vector3.forward * 5);
-        return Physics.Raycast(r, how_far_away);
+        return Vector3.Distance(gameObject.transform.position, station.transform.position) < 30;
     }
     void Depart()
     {
         if (!AtStation(target[station_tracker]))
             MoveTrain(train_speed);
-        if (DetectStation(target[station_tracker], 20f))
+        if (DetectStation(target[station_tracker]))
             Brake();
     }
     void MoveTrain(float train_speed)
     {
-        gameObject.transform.position += new Vector3(0, 0, train_speed);
+        gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, train_speed), ForceMode.Force);
     }
     void Brake()
     {
-           train_speed = Mathf.Lerp(train_speed, 0, Time.deltaTime);
+        gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, -train_speed), ForceMode.Force);
     }
     void GoToNextStation()
     {
@@ -71,22 +71,24 @@ public class MyTrainMotion : MonoBehaviour {
     }
    	// Update is called once per frame
 	void Update () {
-        Debug.DrawLine(gameObject.transform.position, target[station_tracker].position);
-        Debug.Log(trainStopped);
-        //  Depart();
-        if(!doorsready)
-        {
-            tr.OpenDoors();
-        }
-     //   StartCoroutine(CheckIfStopped());
-        //if (trainStopped)
-      //      StartCoroutine(WaitInStation(10f));
+        //  Debug.DrawLine(gameObject.transform.position, target[station_tracker].position);
+        //   Debug.Log(DetectStation(target[station_tracker]));
+        Depart();
+         
+        
+     //  StartCoroutine(CheckIfStopped());
+     //   if (trainStopped)
+      //    StartCoroutine(WaitInStation(10f));
         
     }
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
             PlayerInside = true; 
+    }
+    void FixedUpdate()
+    {
+        //Depart();
     }
     
     
