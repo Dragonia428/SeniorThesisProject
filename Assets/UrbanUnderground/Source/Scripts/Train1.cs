@@ -67,7 +67,7 @@ public class Train1 : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider o) {
-		td.doorsMoving = false;
+		//td.doorsMoving = false;
         if (o.tag == "Player") {
             playerInside = true;
             o.transform.SetParent(this.transform);
@@ -95,7 +95,7 @@ public class Train1 : MonoBehaviour {
 	}
 
 	IEnumerator leaveStation() {
-		td.CloseDoors();
+	//	td.CloseDoors();
 		yield return new WaitForSeconds(3f);
 		current.Stop();
 		current.clip = leaving;
@@ -107,7 +107,7 @@ public class Train1 : MonoBehaviour {
 			current.spatialBlend = 0;
 		}*/
 		td.SecureDoors();
-		td.doorsMoving = false;
+		//td.doorsMoving = false;
 	}
 
 	IEnumerator Depart() {

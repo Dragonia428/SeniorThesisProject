@@ -2,9 +2,10 @@
 using System.Collections; 
 using System.Collections.Generic;
 
+
 public class PriorityQueue<T> 
 {
-    SortedDictionary<T, T> items;
+    Dictionary<T, T> items;
     OrderingConvention convention; 
     public Int32 Count
     {
@@ -14,6 +15,10 @@ public class PriorityQueue<T>
     {
         get { return Convention; }
         set { Convention = value; }
+    }
+    public void Sort()
+    {
+       // if(OrderingConvention.Max)
     }
     public PriorityQueue(OrderingConvention myconvention)
     {

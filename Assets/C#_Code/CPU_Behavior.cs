@@ -54,13 +54,13 @@ public class CPU_Behavior : MonoBehaviour {
     public void Move_CPU(float speed)
     {
         anim.SetFloat("Speed", speed);
-        anim.SetFloat("AngularSpeed", navigation_path.angularSpeed);
+       // anim.SetFloat("AngularSpeed", navigation_path.angularSpeed);
     }
 	// Update is called once per frame
 	void Update () {
         //Debug.Log(IsAtDestination());
         //   Debug.Log(Vector3.Distance(gameObject.transform.position, waypoints[currentindex].transform.position));
-        if (!AreAllWayPointsAreOccupied())
+        if (!AreAllWayPointsAreOccupied() && MyTrainMotion.trainStopped)
         {
             try
             {

@@ -9,7 +9,7 @@ public class MyTrainMotion : MonoBehaviour {
     public float train_speed = 1.5f;
     static public bool trainStopped = false;
     [HideInInspector]
-    public bool doorsready = false; 
+    public bool doorsready = true; 
     public int station_tracker = 0;
     static public bool PlayerInside = false;
    void Awake()
@@ -26,13 +26,21 @@ public class MyTrainMotion : MonoBehaviour {
 	}
 	int CalculateRemainingDistance(Transform the_other_object)
     {
+        
             return (int)(the_other_object.position.z - gameObject.transform.position.z);
         
         
     }
     bool AtStation(Transform the_other_object)
     {
-        return CalculateRemainingDistance(the_other_object) == 0;
+        try {
+            return CalculateRemainingDistance(the_other_object) == 0;
+        }
+        catch(System.IndexOutOfRangeException)
+        {
+            //Debug.Log(station_tracker);
+            return false; 
+        }
     }
     IEnumerator DepartFromStation(float waittime)
     {
@@ -49,7 +57,7 @@ public class MyTrainMotion : MonoBehaviour {
     }
     bool DetectStation(Transform station)
     {
-        return Vector3.Distance(gameObject.transform.position, station.transform.position) < 30;
+        return Vector3.Distance(gameObject.transform.position, station.transform.position) < 100;
     }
     void Depart()
     {
@@ -60,46 +68,71 @@ public class MyTrainMotion : MonoBehaviour {
     }
     void MoveTrain(float train_speed)
     {
-        gameObject.GetComponent<Rigidbody>().velocity += new Vector3(0, 0, train_speed);
+
+        gameObject.transform.position += new Vector3(0, 0, train_speed);
 
     }
     void Brake()
     {
-       // gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, -train_speed), ForceMode.Force);
+        gameObject.transform.position += new Vector3(0, 0, 0);
     }
     void GoToNextStation()
     {
-        tr.CloseDoors();
+        trainStopped = false;
+        station_tracker++;
+        return; 
     }
     IEnumerator WaitInStation(float wait_time_till_departure)
     {
-        tr.OpenDoors();
-        yield return new WaitForSeconds(wait_time_till_departure);
-       // tr.CloseDoors();
-        
+        bool executed = false;
+        if (!tr.isMoving && !executed)
+        {
+            tr.SetDoorVector(!tr.opened);
+            tr.isMoving = !tr.isMoving;
+            tr.StartCoroutine(tr.snapDoorsInState());
+            yield return new WaitForSeconds(wait_time_till_departure);
+            executed = true;
+           
+           
+        }
+        Invoke("GoToNextStation", wait_time_till_departure+5);
+        // station_tracker++;
+        //  station_tracker++;
+
+        // tr.CloseDoors();
+
     }
    	// Update is called once per frame
 	void Update () {
         //  Debug.DrawLine(gameObject.transform.position, target[station_tracker].position);
         //   Debug.Log(DetectStation(target[station_tracker]));
-      Depart();
-         
+        try {
+            Depart();
+        }
+        catch(System.IndexOutOfRangeException)
+        {
+            Brake();
+        }
         
-     //  StartCoroutine(CheckIfStopped());
-     //   if (trainStopped)
-      //    StartCoroutine(WaitInStation(10f));
+        StartCoroutine(CheckIfStopped());
+        if(trainStopped)
+        {
+            StartCoroutine(WaitInStation(5f));
+            trainStopped = false; 
+            //station_tracker++;
+        }
         
     }
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
-            PlayerInside = true; 
+        {
+            //PlayerInside = true;
+            other.transform.SetParent(gameObject.transform);
+        }
     }
-    void FixedUpdate()
-    {
-        Debug.Log(AtStation(targets[station_tracker].transform));
-    //    Depart();
-    }
+    
+    
     
     
 }

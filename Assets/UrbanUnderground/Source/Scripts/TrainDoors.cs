@@ -10,66 +10,110 @@ public class TrainDoors : MonoBehaviour {
 	private LeftDoor[] leftDoors;
 
 	[HideInInspector]
-	public bool doorsMoving = false;
-
+    public bool opened = false;
+    public float speed = 1f;
+    [HideInInspector]
+    public bool isMoving = false;
+    void Awake()
+    {
+        rightDoors = GetComponentsInChildren<RightDoor>();
+        leftDoors = GetComponentsInChildren<LeftDoor>();
+       
+    }
 	void Start() {
-		rightDoors = GetComponentsInChildren<RightDoor>();
-		leftDoors = GetComponentsInChildren<LeftDoor>();
+
 	}
 
 	void Update() {
 
-        if (doorsMoving)
-        {
-            foreach (RightDoor r in rightDoors)
-            {
-
-                r.transform.position = Vector3.Slerp(r.transform.position, r.targetValue, Time.deltaTime);
-            }
-            foreach (LeftDoor l in leftDoors)
-            {
-                l.transform.position = Vector3.Slerp(l.transform.position, l.targetValue, Time.deltaTime);
-            }
-            //doorsMoving = false;
-        }
+        if (isMoving)
+            MoveDoors();
         //
 		//}
 
 	}
+    public void InitializeDoors()
+    {
+        SetDoorVector(!opened);
+        isMoving = !isMoving; 
+        StartCoroutine(snapDoorsInState());
+        
+    }
+
     private void MoveDoors()
     {
+        foreach (RightDoor r in rightDoors)
+        {
+            r.transform.position = Vector3.Slerp(r.transform.position, r.targetValue, Time.deltaTime * speed);
+        }
+        foreach (LeftDoor l in leftDoors)
+        {
+            l.transform.position = Vector3.Slerp(l.transform.position, l.targetValue, Time.deltaTime * speed);
+        }
+    }
+    public void SetDoorVector(bool toOpen)
+    {
+        if (toOpen)
+        {
+            for (int i = 0; i < rightDoors.Length; i++)
+            {
+                rightDoors[i].SetDoorVector(0.8f);
+                leftDoors[i].SetDoorVector(0.8f);
+            }
+        }
+        else {
+            for (int i = 0; i < rightDoors.Length; i++)
+            {
+                rightDoors[i].SetDoorVector(-0.8f);
+                leftDoors[i].SetDoorVector(-0.8f);
+            }
+        }
+    }
+    public void OpenDoors()
+    {
+        //   gameObject.GetComponent<MyTrainMotion>().doorsready = true;
        
+        if (isMoving)
+        {
+            foreach (RightDoor r in rightDoors)
+            {
+                r.transform.position = r.targetValue;
+               
+                
+            }
+            foreach (LeftDoor l in leftDoors)
+            {
+
+                l.transform.position = l.targetValue;
+                
+            }
+        }
+
+            // gameObject.GetComponent<MyTrainMotion>().doorsready = true;
+            //	StartCoroutine (SnapDoorsOpen ());
+
+        }
+    public IEnumerator snapDoorsInState()
+    {
+        yield return new WaitForSeconds(10f);
+        isMoving = false;
+        opened = !opened;
+        foreach (RightDoor r in rightDoors)
+        {
+            r.transform.position = r.targetValue;
+        }
+        foreach (LeftDoor l in leftDoors)
+        {
+            l.transform.position = l.targetValue;
+        }
+      //  yield return new WaitForSeconds(20f);
     }
-
-	public void OpenDoors() {
-        Debug.Log(doorsMoving);
-		foreach ( RightDoor r in rightDoors) {
-			r.SetDoorVector(0.8f);
-		}
-		foreach ( LeftDoor l in leftDoors) {
-			l.SetDoorVector(-0.8f);
-		}
-        doorsMoving = true;
-
-        gameObject.GetComponent<MyTrainMotion>().doorsready = true;
-        //	StartCoroutine (SnapDoorsOpen ());
-
-    }
-
-	public void CloseDoors() {
-		foreach ( RightDoor r in rightDoors) {
-			r.SetDoorVector(-0.8f);
-		}
-		foreach ( LeftDoor l in leftDoors) {
-			l.SetDoorVector(-0.8f);
-		}
-		doorsMoving = true;
-	}
+    
 
 	public void SecureDoors()
     {
-        doorsMoving = true; 
-        if (MyTrainMotion.trainStopped)
+       // doorsMoving = true; 
+        if (gameObject.GetComponent<MyTrainMotion>().doorsready)
         {
             
             foreach (RightDoor r in rightDoors)
@@ -84,9 +128,9 @@ public class TrainDoors : MonoBehaviour {
                 l.transform.position = new Vector3(l.transform.position.x, l.transform.position.y, l.transform.position.z - 0.8f);
                 
             }
-            
-            
-            
+
+
+            gameObject.GetComponent<MyTrainMotion>().doorsready = false;
         }
         
         

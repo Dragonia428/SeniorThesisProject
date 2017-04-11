@@ -12,7 +12,7 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
@@ -61,6 +61,12 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\UnityFitbit\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\UnityFitbit\Example Project\Fitbit Example Project\Assets\Plugins\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="VR4ASD.CSharp.Plugins.csproj">
@@ -71,6 +77,11 @@
   <ItemGroup>
     <Compile Include="Assets\C#_Code\CPUHelper.cs" />
     <Compile Include="Assets\C#_Code\CPU_Behavior.cs" />
+    <Compile Include="Assets\C#_Code\FitBitScripts\FitBitAPI.cs" />
+    <Compile Include="Assets\C#_Code\FitBitScripts\FitbitCaller.cs" />
+    <Compile Include="Assets\C#_Code\FitBitScripts\FitbitData.cs" />
+    <Compile Include="Assets\C#_Code\FitBitScripts\JSONObject.cs" />
+    <Compile Include="Assets\C#_Code\FitBitScripts\OAuth2AccessToken.cs" />
     <Compile Include="Assets\C#_Code\HashID.cs" />
     <Compile Include="Assets\C#_Code\MyTrainMotion.cs" />
     <Compile Include="Assets\C#_Code\PriorityQueue.cs" />
@@ -98,6 +109,7 @@
     <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
+    <None Include="Assets\UnityFitbit\Example Project\Fitbit Example Project\Assets\Plugins\Newtonsoft.Json.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
