@@ -2,23 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-public class Waypoint_Queue {
-	public Waypoint_Queue()
+public class Waypoint_Queue<GameObject, Float>
+{
+    public PriorityQueue<GameObject, Float> pq;
+    public Waypoint_Queue()
     {
+        this.pq = new PriorityQueue<GameObject, Float>(OrderingConvention.Max);
+    }
 
-    }
-    private void swap(GameObject i, GameObject j)
+    public void Sort()
     {
-        GameObject temp = i;
-        i = j;
-        j = temp; 
+        pq.Sort();
     }
-	void Start () {
-	    
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	   
-	}
 }

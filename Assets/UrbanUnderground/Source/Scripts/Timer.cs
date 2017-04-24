@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class Timer : MonoBehaviour {
-
+    /*
 	//This class launches the train and handles timing. It is currently set to match the provided demo audio clips, and is intended for demonstration purposes only.
 
 	public Image bar;
@@ -27,7 +27,7 @@ public class Timer : MonoBehaviour {
 			bar.fillAmount -= 1.0f / delay * Time.deltaTime;
 			text.text = "Next demo train";
 			if (bar.fillAmount <= 0.01f) {
-				train.TrainLaunch ();
+				//train.TrainLaunch ();
 				starting = false;
 				bar.fillAmount = 0.0f;
 				bar.color = Color.yellow;
@@ -59,5 +59,5 @@ public class Timer : MonoBehaviour {
 	IEnumerator InsideTrainAnnouncement(){
 		yield return new WaitForSeconds (6f);
 		train.MakeAnnouncementInsideTrain ();
-	}
+	}*/
 }

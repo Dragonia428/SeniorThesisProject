@@ -64,7 +64,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             //Debug.Log(Input.GetJoystickNames().Length == 0);
             if (Input.GetJoystickNames().Length == 0)
             {
-                gameObject.transform.Rotate(new Vector3(0, Input.GetAxis("4th"), 0));
+            //    gameObject.transform.Rotate(new Vector3(0, Input., 0));
                 if (Input.GetKeyDown(KeyCode.Joystick1Button6))
                 {
                     Application.Quit();
@@ -73,8 +73,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
-                gameObject.transform.Rotate(0, Input.GetAxis("Vertical"), 0);
-                if(Input.GetKeyDown(KeyCode.Escape))
+              //  gameObject.transform.Rotate(0, Input.GetAxis("Vertical"), 0);
+                if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button6))
                 {
                     Application.Quit();
                     UnityEditor.EditorApplication.isPlaying = false; 
@@ -274,5 +274,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
+       
     }
 }
